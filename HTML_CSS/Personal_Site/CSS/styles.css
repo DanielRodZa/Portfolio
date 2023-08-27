@@ -1,0 +1,93 @@
+body{
+    margin: 0;
+    text-align: center;
+    font-family: 'Chivo Mono', monospace;   
+}
+
+h1{
+    font-size: 5.625rem;
+    margin: 3.125rem auto 0 auto;
+    color: #4B4848;
+}
+h2{
+    font-size: 2.5rem;
+    color: #4B4848;
+    font-weight: normal;
+}
+h3{
+    color: #6078EA;
+}
+p{
+    line-height: 2;
+}
+hr{
+    border: dotted #6078EA 6px;
+    border-bottom: none;
+    width: 30%;
+    margin: 100px auto;
+}
+
+.nube-superior{
+    position: absolute;
+    right: 30%;
+    top: 50px;
+}
+
+.nube-inferior{
+    position: absolute;
+    left: 30%;
+    bottom: 300px;
+}
+
+.contenedor-superior{
+    background-color: #DFF6FF;
+    position: relative;
+    padding-top: 100px;
+}
+
+.perfil{
+    width: 50%;
+    margin: 0 auto;
+}
+.perfil-img{
+    width: 25%;
+}
+
+.habilidades-fila{
+    width: 50%;
+    margin: 100px auto 100px;
+    text-align: left;
+}
+
+.skill-img{
+    width: 25%;
+    margin-right: 30px;
+}
+
+
+.btn {
+    background: #4B4848;
+    background-image: -webkit-linear-gradient(top, #4B4848, #6078EA);
+    background-image: -moz-linear-gradient(top, #4B4848, #6078EA);
+    background-image: -ms-linear-gradient(top, #4B4848, #6078EA);
+    background-image: -o-linear-gradient(top, #4B4848, #6078EA);
+    background-image: linear-gradient(to bottom, #4B4848, #6078EA);
+    -webkit-border-radius: 8;
+    -moz-border-radius: 8;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+  }
+  
+  .btn:hover {
+    background: #6078EA;
+    background-image: -webkit-linear-gradient(top, #6078EA, #4B4848);
+    background-image: -moz-linear-gradient(top, #6078EA, #4B4848);
+    background-image: -ms-linear-gradient(top, #6078EA, #4B4848);
+    background-image: -o-linear-gradient(top, #6078EA, #4B4848);
+    background-image: linear-gradient(to bottom, #6078EA, #4B4848);
+    text-decoration: none;
+  }
+                

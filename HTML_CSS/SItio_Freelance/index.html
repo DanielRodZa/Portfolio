@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programador Freelancer</title>
+
+    <link rel="stylesheet" href="css/normalize.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    
+</head>
+<body>
+    <header>
+        <h1 class="titulo">Daniel Rodríguez <span>Freelancer</span></h1>
+    </header>
+
+    <div class="nav_bg">
+        <nav class="navegacion_principal contenedor">
+            <a href="#">Inicio</a>
+            <a href="#">Sobre mí</a>
+            <a href="#">Clientes</a>
+            <a href="#">Contacto</a>
+        </nav>
+    </div>
+    
+
+
+    <section class="hero">
+        <div class="contenido-hero">
+
+            <h2>Diseño y Desarrollo Web <span>Freelancer</span></h2>
+
+
+            <div class="ubicacion">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="88" height="88" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFC107" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                    <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+                </svg>
+                <p>
+                    Ciudad de México, México
+                </p>
+            </div>
+
+            <a class="boton" href="#">Contactar</a>
+        </div>
+        
+    </section>
+
+    <main class="contenedor sombra">
+        <h2>Mis Servicios</h2>
+
+        <div class="servicios">
+            <secction class="servicio">
+                <h3>Aplicaciones Web</h3>
+                <div class="iconos">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-browser" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M4 4m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z" />
+                        <path d="M4 8l16 0" />
+                        <path d="M8 4l0 4" />
+                    </svg>
+                </div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae quam id possimus </p>
+            </secction>
+            <secction class="servicio">
+                <h3>Web Scraping</h3>
+                <div class="iconos">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-app-window" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                        <path d="M6 8h.01" />
+                        <path d="M9 8h.01" />
+                    </svg>
+                </div>    
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum consequatur,</p>
+            </secction>
+            <secction class="servicio">
+                <h3>Desarrollo en Python</h3>
+                <div class="iconos">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-python" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M12 9h-7a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h3" />
+                        <path d="M12 15h7a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-3" />
+                        <path d="M8 9v-4a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v5a2 2 0 0 1 -2 2h-4a2 2 0 0 0 -2 2v5a2 2 0 0 0 2 2h4a2 2 0 0 0 2 -2v-4" />
+                        <path d="M11 6l0 .01" />
+                        <path d="M13 18l0 .01" />
+                    </svg>
+                </div>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut quo nulla officia neque</p>
+            </secction>
+
+        </div>
+        
+        <section>
+            <h2>Contacto</h2>
+            <form class="formulario" action="">
+                <fieldset>
+                    <legend>
+                        Contáctanos llenando todos los campos.
+                    </legend>
+                    <div class="contenedor-campos">
+                        <div class="campo">
+                            <label for="">Nombre</label>
+                            <input class="input-text" type="text" placeholder="Nombre">
+                        </div>
+    
+                        <div class="campo">
+                            <label for="">Teléfono</label>
+                            <input class="input-text" type="tel" placeholder="Teléfono">
+                        </div>
+                        
+                        <div class="campo">
+                            <label for="">Correo</label>
+                            <input class="input-text" type="email" placeholder="E-Mail">
+                        </div>
+    
+                        <div class="campo">
+                            <label for="">Mensaje</label>
+                            <textarea class="input-text" name="" id="" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="alinear_derecha flex">
+                        <input class="boton w-100" type="submit" value="Enviar">
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+    
+    </main>
+
+    <footer class="footer">
+        <p>Todos los derechos reservados Daniel Rodriguez Freelance</p>
+    </footer>
+
+    
+</body>
+</html>

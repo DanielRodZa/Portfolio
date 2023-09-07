@@ -1,0 +1,5 @@
+usuarios = [
+    'Daniel',
+    'Juan',
+    'María'
+]

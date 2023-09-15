@@ -27,7 +27,7 @@ class HabitacionHotel:
     def reservar(self):
         if self.disponible:
             self.disponible = False
-            return "La habitación ha sido reservada exitosamente"
+            return "La habitación ha sido reservada exitosamente."
         else:
             return "Lo siento, la habitación no está disponible en este momento."
 
@@ -75,33 +75,34 @@ class Menu:
                 self.listar_habitaciones_disponibles()
             elif opcion == "4":
                 print("Hasta luego.")
-                return None
+                break
             else:
-                print("Por favor introduce una opción válida.")
+                print("Por favor, introduce una opción válida.")
 
     def reservar_habitacion(self):
         cliente = input("Nombre del cliente: ")
         habitacion = int(input("¿Qué habitación deseas reservar? "))
-        noches = int(input("¿Cuántas noches reserva?"))
-        reserva = Reserva(cliente, self.gestor_habitaciones[habitacion-1], noches)
+        noches = int(input("¿Cuántas noches reserva? "))
+        reserva = Reserva(cliente, self.gestor_habitaciones.habitaciones[habitacion - 1], noches)
         print(reserva)
-        print(self.gestor_habitaciones[habitacion-1].reservar())
+        print(self.gestor_habitaciones.habitaciones[habitacion - 1].reservar())
 
     def liberar_habitacion(self):
         habitacion = int(input("¿Qué habitación deseas liberar? "))
-        print(self.gestor_habitaciones[habitacion-1].liberar_habitacion())
+        print(self.gestor_habitaciones.habitaciones[habitacion - 1].liberar_habitacion())
 
     def listar_habitaciones_disponibles(self):
         self.gestor_habitaciones.listar_habitaciones_disponibles()
 
-
 def main():
     gestor_habitaciones = GestorHabitaciones()
+
     habitaciones = [HabitacionHotel(**data) for data in habitaciones_data]
+
     for habitacion in habitaciones:
         gestor_habitaciones.agregar_habitacion(habitacion)
 
-    menu = Menu(GestorHabitaciones)
+    menu = Menu(gestor_habitaciones)
 
     menu.mostrar_menu()
 

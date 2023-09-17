@@ -21,9 +21,9 @@ today = datetime.datetime.now()
 
 
 # Path to downloaded file (Default: same than script)
-download_path = 'C:/Users/Daniel/Documents/PuebaTecnicaPT/Prueba_1'
+download_path = ''
 
-# For dates use format: 'DDMMYYYY'
+# For dates use format: 'DD/MM/YYYY'
 INIT_DATE = '28/08/2023'
 FINAL_DATE = '04/09/2023'
 

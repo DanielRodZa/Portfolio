@@ -4,6 +4,7 @@ import shutil
 import smtplib
 import time
 import os
+import datetime
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -11,17 +12,28 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.edge.options import Options
 
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+
+# Define date
+today = datetime.datetime.now()
 
 
 # Path to downloaded file (Default: same than script)
 download_path = 'C:/Users/Daniel/Documents/PuebaTecnicaPT/Prueba_1'
 
 # For dates use format: 'DDMMYYYY'
-INIT_DATE = '28082023'
-FINAL_DATE = '04092023'
+INIT_DATE = '28/08/2023'
+FINAL_DATE = '04/09/2023'
 
+with open('../lista_correos.txt', 'r') as file:
+    emails = file.readlines()
+
+send_to = [x.replace('\n','') for x in emails]
+# send_to = ['lsantiago@yaganaste.com', 'ntovar@pagatodo.com','mts.zavaleta@gmail.com']
+# send_to = ['mts.zavaleta@gmail.com']
+mensaje = "Hola,\n\nAdjunto el archivo xlsx para la pueba 1 desde un email enviado automaticamente con Python.\n\nSaludos,\nDaniel Rodriguez Zavaleta"
 
 def download_directory():
     if platform.system() == 'Windows':
@@ -36,11 +48,11 @@ def download_directory():
 
 def download_file():
     """
-        Downloads a file from a website using the Selenium WebDriver.
+        Descarga un archivo de un sitio web utilizando Selenium WebDriver.
 
-        This function sets the download directory, navigates to the website,
-        fills in the required input fields, and initiates the download.
-        It then renames the downloaded file and moves it to the specified download path.
+        Esta función configura el directorio de descarga, navega al sitio web,
+        completa los campos de entrada requeridos e inicia la descarga.
+        Luego cambia el nombre del archivo y lo mueve a la ruta de descarga especificada.
 
     """
 
@@ -77,12 +89,12 @@ def download_file():
 
     time.sleep(10)
 
-    file_pattern = f"Consulta_{FINAL_DATE[4:]}{FINAL_DATE[2:4]}{FINAL_DATE[:2]}-*.xlsx"
+    file_pattern = f"Consulta_{today.strftime('%Y%m%d')}-*.xlsx"
     original_directory = download_directory()
 
     selected_file = glob.glob(os.path.join(original_directory, file_pattern))
 
-    new_name = f'TIPO DE CAMBIO AL {FINAL_DATE}.xlsx'
+    new_name = f'TIPO DE CAMBIO AL {today.strftime("%d%m%Y")}.xlsx'
 
     shutil.move(selected_file[0], os.path.join(download_path, new_name))
 
@@ -91,13 +103,14 @@ def download_file():
 
 def send_mail():
     """
-        Sends an email with an attached file using the SMTP protocol.
+    Envía un correo electrónico con un archivo adjunto utilizando el protocolo SMTP.
     """
-    xlsx_file = f'TIPO DE CAMBIO AL {FINAL_DATE}.xlsx'
-    send_to = ['']
+    xlsx_file = f'TIPO DE CAMBIO AL {today.strftime("%d%m%Y")}.xlsx'
 
-    sender_email = ''
-    sender_pass = ''
+    with open('../credenciales.txt', 'r') as credentials:
+        lines = credentials.readlines()
+    sender_email = lines[0].strip()
+    sender_pass = lines[1].strip()
 
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
@@ -106,6 +119,7 @@ def send_mail():
     msg['From'] = sender_email
     msg['To'] = ', '.join(send_to)
     msg['Subject'] = xlsx_file
+    msg.attach(MIMEText(mensaje, 'plain'))
 
     try:
         msg_file = open(xlsx_file, 'rb')
@@ -135,3 +149,7 @@ def send_mail():
 def main():
     download_file()
     send_mail()
+
+
+if __name__ == '__main__':
+    main()

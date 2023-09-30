@@ -56,7 +56,7 @@ def main():
 
     while True:
         print("Opciones:\n1. Agregar Tarea\n2. Listar Tareas\n3. Completar Tarea\n4. Descompletar Tarea\n5. Eliminar "
-              "Tarea\n6. Salir")
+            "Tarea\n6. Salir")
         opcion = input("Seleccione una opción: ")
         if opcion == '1':
             descripcion = input("Ingrese la descripción de la tarea: ")

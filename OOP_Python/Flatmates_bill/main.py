@@ -1,28 +1,26 @@
-class Bill:
-    """
-    Object that contains data about a bill, such as total amount and period of the bill
-    """
-    def __init__(self, amount, period):
-        self.period = period
-        self.amount = amount
+from OOP_Python.Flatmates_bill.PDFGenerator import PDFReport
+from OOP_Python.Flatmates_bill.flat import Bill, Flatmate
 
-class Flatmate:
-    """
 
-    """
-    def __init__(self, name, days_in_house):
-        self.name = name
-        self.days_in_house = days_in_house
+def main():
+    a = float(input("Hey User, enter the bill amount: "))
+    period = input("What is the bill period? E.g. December 2023: ")
+    name = input("What is your name? ")
+    days_in_house_1 = int(input(f"How many days did {name} stays in the house during the bill period? "))
+    flatmate_name = input("What is your flatmate name? ")
+    days_in_house_2 = int(input(f"How many days did {flatmate_name} stays in the house during the bill period? "))
 
-    def pays(self, bill):
-        pass
+    the_bill = Bill(amount=a, period=period)
+    flatmate_1 = Flatmate(name=name, days_in_house=days_in_house_1)
+    flatmate_2 = Flatmate(name=flatmate_name, days_in_house=days_in_house_2)
 
-class PDFReport:
-    """
+    print(f"{flatmate_1.name} pays: {flatmate_1.pays(bill=the_bill, flatmate2=flatmate_2)}")
+    print(f"{flatmate_2.name} pays: {flatmate_2.pays(bill=the_bill, flatmate2=flatmate_1)}")
 
-    """
-    def __init__(self, filename):
-        self.filename = filename
+    pdf_report = PDFReport(filename='Report1.pdf')
+    pdf_report.generate(flatmate1=flatmate_1, flatmate2=flatmate_2, bill=the_bill)
 
-    def generate(self, flatmate1, flatmate2, bill):
-        pass
+
+
+if __name__ == '__main__':
+    main()

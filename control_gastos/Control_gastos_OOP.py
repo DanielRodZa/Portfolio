@@ -4,9 +4,6 @@ import glob
 import datetime
 
 
-# TODO: verificar que el saldo lo tome del csv
-
-
 class Cuenta:
     """
     Esta clase representa una cuenta bancaria, de crédito o débito.

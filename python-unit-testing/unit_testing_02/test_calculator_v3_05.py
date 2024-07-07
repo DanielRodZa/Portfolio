@@ -12,10 +12,10 @@ Topics:
 
 # 1. Import unittest & the required modules
 import unittest
-from unit_testing_02 import test_calculator_v3_01
-from unit_testing_02 import test_calculator_v3_02
-from unit_testing_02 import test_calculator_v3_03
-from unit_testing_02 import test_calculator_v3_04
+import test_calculator_v3_01
+import test_calculator_v3_02
+import test_calculator_v3_03
+import test_calculator_v3_04
 
 # 2. Create an instance of the TestLoader
 loader = unittest.TestLoader()

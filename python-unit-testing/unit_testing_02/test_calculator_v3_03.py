@@ -1,7 +1,7 @@
 # Topics: two classes
 
 import unittest
-from unit_testing_02.calculator_v3 import Calculator
+from calculator_v3 import Calculator
 
 
 class TestsCalculatorAddFunctionality(unittest.TestCase):
@@ -27,4 +27,6 @@ class TestsCalculatorAddFunctionality(unittest.TestCase):
 
     @unittest.skip("Waiting on BA...")
     def test_add_two_positive_decimal_numbers_with_ten_decimal_places(self):
-        pass
+        calc = Calculator(10.5587589876, 20.977689893)
+        result = calc.calc_add()
+        self.assertEqual(result, 31.5364488806)

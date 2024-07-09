@@ -9,7 +9,7 @@ from request_gallery import solicitar_url
 def url_fetch(name):
     base_url = 'https://www.reddit.com'
     endpoint = f'/user/{name}'
-    category = '/new'
+    category = ''
     url = base_url + endpoint + category + '.json'
     after_post_id = None
 
@@ -35,19 +35,17 @@ def url_fetch(name):
         time.sleep(0.5)
 
         for x in json_data['data']['children']:
-            post_url = x['data']['url']
-            post_name = x['data']['title']
-            user = x['data']['subreddit']
-            if 'is_gallery' in x['data']:
-                # solicitar_url(url_principal=x['data']['url'], name=name)
-                pass
-            else:
-                is_gallery = False
-                data.append({'Subreddit': user, 'Título': post_name, 'is_gallery':is_gallery, 'URL': post_url})
+            dividir_links(x, data)
 
         if after_post_id == None:
             break
 
+    nombre_csv_links = create_dataframes(dataset, data, name)
+
+    return nombre_csv_links
+
+
+def create_dataframes(dataset, data, name):
     df = pd.DataFrame(dataset)
     df.to_csv(f'{name}/{name}.csv', index=False)
 
@@ -57,3 +55,19 @@ def url_fetch(name):
     df.to_csv(nombre_csv_links, index=False)
 
     return nombre_csv_links
+
+
+def dividir_links(x, data):
+    try:
+        post_url = x['data']['url']
+        post_name = x['data']['title']
+        user = x['data']['subreddit']
+        if 'is_gallery' in x['data']:
+            is_gallery = True
+        else:
+            is_gallery = False
+        data.append({'Subreddit': user, 'Título': post_name, 'is_gallery': is_gallery, 'URL': post_url})
+    except KeyError as ke:
+        print(f'El post no tiene un elemento: {ke}')
+    except Exception as e:
+        print(f'Hubo un error: {e}')

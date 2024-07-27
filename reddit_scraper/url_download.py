@@ -48,7 +48,7 @@ def descargar_archivo(url, directorio='', nombre_archivo=None, gallery=False):
 
         if not gallery:
             extension = nombre_archivo.split('.')[-1].lower()
-            if extension not in ['jpg', 'jpeg', 'gif', 'png', 'webp', 'gifv', 'mp4']:
+            if extension not in ['jpg', 'jpeg',  'png', 'webp', 'gif', 'gifv', 'mp4']:
                 raise ValueError("Formato de archivo no válido")
 
         with open(nombre_archivo, 'wb') as archivo:

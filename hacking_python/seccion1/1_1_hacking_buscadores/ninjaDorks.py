@@ -14,7 +14,7 @@ API_KEY_GOOGLE = os.getenv("API_KEY_GOOGLE")
 # Leemos el indentificador
 SEARCH_ENGINE_ID = os.getenv("SEARCH_ENGINE_ID")
 
-query = 'Daniel Rodriguez Zavaleta'
+query = ''
 
 def main_google():
     gsearch = GoogleSearch(API_KEY_GOOGLE, SEARCH_ENGINE_ID)

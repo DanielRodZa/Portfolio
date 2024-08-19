@@ -5,6 +5,7 @@ import sys
 
 from googleSearch import GoogleSearch
 from duckduckgoSearch import DuckSearch
+from results_parser import ResultsParser
 
 
 def env_config():
@@ -19,7 +20,19 @@ def env_config():
     set_key(".env", "SEARCH_ENGINE_ID", engine_id)
 
 
-def main_google(query, start_page, pages, lang):
+def tratamiento_resultados(resultados, fichero_json=None, fichero_html=None):
+    # Crea y muestra los resultados por consola
+    result_processor = ResultsParser(resultados=resultados)
+    result_processor.mostrar_pantalla()
+
+    # Comprueba que se haya pedido un json o un html
+    if fichero_json is not None:
+        result_processor.exportar_json(fichero_json)
+    if fichero_html is not None:
+        result_processor.exportar_html(fichero_html)
+
+
+def main_google(query, start_page, pages, lang, output_json, output_html):
     # Comprobar si existe el fichero .env
     env_exists = os.path.exists('.env')
     if not env_exists:
@@ -46,15 +59,13 @@ def main_google(query, start_page, pages, lang):
         lang=lang
     )
 
-    for r in results:
-        print(r)
+    tratamiento_resultados(results, output_json, output_html)
 
-def main_duck(query):
+def main_duck(query, output_json, output_html):
     dsearch = DuckSearch()
     results = dsearch.search(query=query)
 
-    for r in results:
-        print(r)
+    tratamiento_resultados(results, output_json, output_html)
 
 
 if __name__ == '__main__':
@@ -76,6 +87,10 @@ if __name__ == '__main__':
                         help='Código de idioma para los resultados.\nDefault: "lang_es"')
     parser.add_argument('-g', '--google', action='store_true',)
     parser.add_argument('-d', '--duck', action='store_true',)
+    parser.add_argument('--json', type=str,
+                        help='Exporta los resultado en formato json')
+    parser.add_argument('--html', type=str,
+                        help='Exporta los resultado en formato html')
     args = parser.parse_args()
     if args.configure:
         env_config()
@@ -87,9 +102,13 @@ if __name__ == '__main__':
             query=args.query,
             start_page=args.start_page,
             pages=args.pages,
-            lang=args.lang
+            lang=args.lang,
+            output_json=args.json,
+            output_html=args.html
         )
     if args.duck:
         main_duck(
-            query=args.query
+            query=args.query,
+            output_json=args.json,
+            output_html=args.html
         )

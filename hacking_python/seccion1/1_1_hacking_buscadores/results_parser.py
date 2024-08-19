@@ -22,7 +22,7 @@ class ResultsParser:
             elementos_html += elemento
         informe_html = plantilla.replace('{{ resultados }}', elementos_html)
         with open(archivo_salida, "w", encoding="utf-8") as f:
-            f.write(informe_html)
+            f.write(f"{informe_html}.html")
         print(f"Resultados exportados a HTML. Fichero creado: {archivo_salida}")
 
     def exportar_json(self, archivo_salida):
@@ -33,7 +33,7 @@ class ResultsParser:
     def mostrar_pantalla(self):
         console = Console()
         table = Table(show_header=True, header_style="bold magenta")
-        table.add_column("#", style="dim")
+        table.add_column("#", style="dim", width=5)
         table.add_column("Título", width=50)
         table.add_column("Descripción")
         table.add_column("Enlace")
@@ -45,6 +45,5 @@ class ResultsParser:
                 resultado["description"],
                 resultado["link"]
                 )
-            table.add_row("","","","")
 
         console.print(table)

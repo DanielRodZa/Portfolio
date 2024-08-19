@@ -26,7 +26,7 @@ class ResultsParser:
         print(f"Resultados exportados a HTML. Fichero creado: {archivo_salida}")
 
     def exportar_json(self, archivo_salida):
-        with open(archivo_salida, "w", encoding="utf-8") as f:
+        with open(f"{archivo_salida}.json", "w", encoding="utf-8") as f:
             json.dump(self.resultados, f, ensure_ascii=False, indent=4)
         print(f"Resultados exportados a JSON. Fichero creado: {archivo_salida}")
 

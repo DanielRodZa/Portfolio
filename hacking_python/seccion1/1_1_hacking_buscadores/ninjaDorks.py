@@ -6,6 +6,7 @@ import sys
 from googleSearch import GoogleSearch
 from duckduckgoSearch import DuckSearch
 from results_parser import ResultsParser
+from file_downloader import FileDownloader
 
 
 def env_config():
@@ -32,7 +33,7 @@ def tratamiento_resultados(resultados, fichero_json=None, fichero_html=None):
         result_processor.exportar_html(fichero_html)
 
 
-def main_google(query, start_page, pages, lang, output_json, output_html):
+def main_google(query, start_page, pages, lang, output_json, output_html, download):
     # Comprobar si existe el fichero .env
     env_exists = os.path.exists('.env')
     if not env_exists:
@@ -61,7 +62,14 @@ def main_google(query, start_page, pages, lang, output_json, output_html):
 
     tratamiento_resultados(results, output_json, output_html)
 
-def main_duck(query, output_json, output_html):
+    if download:
+        file_tipes = download.split(",")
+        urls = [resultado['link'] for resultado in results]
+        fdowloader = FileDownloader("Descargas")
+        fdowloader.filtro_descargas(urls, file_tipes)
+
+
+def main_duck(query, output_json, output_html, download):
     dsearch = DuckSearch()
     results = dsearch.search(query=query)
 
@@ -91,6 +99,10 @@ if __name__ == '__main__':
                         help='Exporta los resultado en formato json')
     parser.add_argument('--html', type=str,
                         help='Exporta los resultado en formato html')
+    parser.add_argument('--download', type=str, default='all',
+                        help="Especifica las extensiones de los archivos que quieres descargar separadas por coma."
+                             "Ej: --dowload 'pdf,doc,sql'"
+                             "Default: 'None'")
     args = parser.parse_args()
     if args.configure:
         env_config()
@@ -104,11 +116,13 @@ if __name__ == '__main__':
             pages=args.pages,
             lang=args.lang,
             output_json=args.json,
-            output_html=args.html
+            output_html=args.html,
+            download=args.download
         )
     if args.duck:
         main_duck(
             query=args.query,
             output_json=args.json,
-            output_html=args.html
+            output_html=args.html,
+            download=args.download
         )

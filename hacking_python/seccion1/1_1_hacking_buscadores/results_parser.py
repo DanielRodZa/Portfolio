@@ -21,8 +21,8 @@ class ResultsParser:
                         f'</div>')
             elementos_html += elemento
         informe_html = plantilla.replace('{{ resultados }}', elementos_html)
-        with open(archivo_salida, "w", encoding="utf-8") as f:
-            f.write(f"{informe_html}.html")
+        with open(f"{archivo_salida}.html", "w", encoding="utf-8") as f:
+            f.write(informe_html)
         print(f"Resultados exportados a HTML. Fichero creado: {archivo_salida}")
 
     def exportar_json(self, archivo_salida):

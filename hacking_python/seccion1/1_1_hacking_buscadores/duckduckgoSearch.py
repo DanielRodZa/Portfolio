@@ -1,7 +1,6 @@
 from duckduckgo_search import DDGS
 
 
-
 class DuckSearch:
     def search(self, query, max_results=10):
         final_result = []

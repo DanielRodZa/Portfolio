@@ -75,6 +75,12 @@ def main_duck(query, output_json, output_html, download):
 
     tratamiento_resultados(results, output_json, output_html)
 
+    if download:
+        file_tipes = download.split(",")
+        urls = [resultado['link'] for resultado in results]
+        fdowloader = FileDownloader("Descargas")
+        fdowloader.filtro_descargas(urls, file_tipes)
+
 
 if __name__ == '__main__':
     # Configuración de los argumentos del programa

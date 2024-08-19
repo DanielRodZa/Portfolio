@@ -9,7 +9,7 @@ class FileDownloader:
 
     def crear_directorio(self):
         if not os.path.exists(self.directorio_destino):
-            os.makedirs(self.directorio_destino)
+            os.mkdir(self.directorio_destino)
 
     def descargar_archivo(self, url):
         try:

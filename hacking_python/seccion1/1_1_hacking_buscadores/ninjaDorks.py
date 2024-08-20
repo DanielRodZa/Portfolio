@@ -73,9 +73,6 @@ def main_google(query, start_page, pages, lang, output_json, output_html, downlo
         print("Por favor configura las variables de entorno")
         sys.exit(1)
 
-    # Cargamos las variables de entorno
-    load_dotenv()
-
     # Leemos la clave API y el ID del buscador
     API_KEY_GOOGLE = os.getenv("API_KEY_GOOGLE")
     SEARCH_ENGINE_ID = os.getenv("SEARCH_ENGINE_ID")
@@ -116,6 +113,8 @@ def main_duck(query, output_json, output_html, download):
 
 
 if __name__ == '__main__':
+    # Cargamos las variables de entorno
+    load_dotenv()
     # Configuración de los argumentos del programa
     parser = argparse.ArgumentParser(description='Esta herramienta permite hacer '
                                                  'queries en buscadores de forma '
@@ -150,7 +149,7 @@ if __name__ == '__main__':
         env_config()
         print("Archivo .env configurado satisfactoriamente")
         sys.exit(1)
-    if args.gen_dork:
+    if args.generate_dork:
         generate_dork(
             gen_dork=args.generate_dork,
         )

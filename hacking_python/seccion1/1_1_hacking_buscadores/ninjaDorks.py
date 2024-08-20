@@ -161,7 +161,7 @@ if __name__ == '__main__':
             output_json=args.json,
             output_html=args.html,
             download=args.download,
-            gen_dorks=args.generate_dork
+            gen_dork=args.generate_dork
         )
     if args.duck:
         main_duck(

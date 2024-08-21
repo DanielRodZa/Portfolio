@@ -28,8 +28,8 @@ class SmartSearch:
         for archivo in os.listdir(self.dir_path):
             file_path = os.path.join(self.dir_path, archivo)
             try:
-                with open(file_path, mode='r', encoding='utf-8') as file:
-                    files[archivo] = file.read()
+                with open(file_path, mode='r', encoding='utf-8') as f:
+                    files[archivo] = f.read()
             except Exception as e:
                 print(f"Error al leer el archivo {file_path}:\nERROR: {e}")
         return files
@@ -45,10 +45,10 @@ class SmartSearch:
         """
         coincidencias = {}
         # Recorremos el contenido de todos los ficheros del directorio
-        for file, text in self.files.items():
+        for f, text in self.files.items():
             respuesta = ""
             while respuesta not in ("y", "n", "yes", "no"):
-                respuesta = input(f"El fichero {file} tiene una longitud de {len(text)} caracteres\n"
+                respuesta = input(f"El fichero {f} tiene una longitud de {len(text)} caracteres\n"
                                   f"¿Quieres procesarlo? (yes/no)")
                 if respuesta in ("no", "n"):
                     continue
@@ -185,7 +185,7 @@ if __name__ == "__main__":
     parser.add_argument("-m", "--model_name", type=str, default="gpt-3.5-turbo-0125",
                         help="El nombre del modelo de OpenAi para realizar la búsqueda")
     parser.add_argument("--max_tokens", type=int, default=100,
-                        help="El número máximo de tokens en la predicción\generación ")
+                        help="El número máximo de tokens en la predicción\\generación.")
 
     # Parseamos los argumentos
     args = parser.parse_args()

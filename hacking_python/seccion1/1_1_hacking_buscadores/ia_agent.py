@@ -1,6 +1,10 @@
+import os
+
 from gpt4all import GPT4All
 from openai import OpenAI
 from dotenv import load_dotenv
+import google.generativeai as genai
+
 
 
 class GPT4AllGenerator:
@@ -27,6 +31,17 @@ class OpenAIGenerator:
             model="gpt-4"
         )
         return chat_completion.choices[0].message.content
+
+
+class GeminiAIGenerator:
+    def __init__(self, API_KEY, model_name="gemini-1.5-flash"):
+        self.model_name = model_name
+        genai.configure(api_key=API_KEY)
+        self.model = genai.GenerativeModel(self.model_name)
+
+    def generate(self, prompt):
+        response = self.model.generate_content(prompt)
+        return response.text
 
 
 class IAAgent:
@@ -61,21 +76,12 @@ class IAAgent:
         """
 
 
-
 if __name__ == "__main__":
-    descripcion = "Listado de usuarios y contraseñas en el contenido de ficheros de texto, Utiliza variaciones de la palabra password y user (passwd, pwd...)"
-    # ia_agent = IAAgent()
-    # print(ia_agent.generate_gdork(descripcion))
-    #
-    # from openai import OpenAI
-
     load_dotenv()
-
-    openai_generator = OpenAIGenerator()
-    ia_agent = IAAgent(openai_generator)
-
-    resultado = ia_agent.generate_gdork(descripcion)
-    print(resultado)
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+    # model = genai.GenerativeModel('gemini-1.5-flash')
+    # response = model.generate_content("Escribe un párrafo sobre la historia de la segunda guerra mundial.")
+    # print(response.text)
 
 
 

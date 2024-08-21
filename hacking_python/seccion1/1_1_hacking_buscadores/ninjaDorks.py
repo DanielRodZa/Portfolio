@@ -3,11 +3,13 @@ import os
 import argparse
 import sys
 
+import google.generativeai as genai
+
 from googleSearch import GoogleSearch
 from duckduckgoSearch import DuckSearch
 from results_parser import ResultsParser
 from file_downloader import FileDownloader
-from ia_agent import OpenAIGenerator, GPT4AllGenerator, IAAgent
+from ia_agent import OpenAIGenerator, GPT4AllGenerator, GeminiAIGenerator, IAAgent
 
 
 def env_config():
@@ -32,6 +34,16 @@ def openai_config():
     set_key(".env", "OPENAI_API_KEY", openai_api_key)
 
 
+def gemini_config():
+    """
+    Cofigurar el archivo .env con los valores proporcionados para el funcionamiento de gemini
+    Returns:
+        None
+    """
+    gemini_api_key = input("Introduce tu API KEY de Gemini: ")
+    set_key(".env", "GEMINI_API_KEY", gemini_api_key)
+
+
 def tratamiento_resultados(resultados, fichero_json=None, fichero_html=None):
     # Crea y muestra los resultados por consola
     result_processor = ResultsParser(resultados=resultados)
@@ -46,22 +58,27 @@ def tratamiento_resultados(resultados, fichero_json=None, fichero_html=None):
 def generate_dork(gen_dork):
     # Preguntar si el usuario quiere usar un modelo local u OpenAI
     respuesta = ""
-    while respuesta.lower() not in ("y", "yes", "n", "no"):
-        respuesta = input("Quieres utilizar GPT-4 de OpenAi: (yes/no)?: ")
+    while respuesta.lower() not in ("gpt", "gpt-4", "gemini", "local"):
+        respuesta = input("Elige el modelo de IA a utilizar: (gpt-4/gemini/local)?: ")
 
-    if respuesta.lower() in ("y", "yes"):
+    if respuesta.lower() in ("gpt", "gpt-4"):
         # Comprobamos si esta definida la API KEY de Opena AI en el fichero .env
         if not "OPENAI_API_KEY" in os.environ:
             openai_config()
             load_dotenv()
-        openai_generator = OpenAIGenerator()
-        ia_agent = IAAgent(openai_generator)
+        generator = OpenAIGenerator()
+    elif respuesta.lower() in ("gemini"):
+        if not "GEMINI_API_KEY" in os.environ:
+            gemini_config()
+            load_dotenv()
+        generator = GeminiAIGenerator(API_KEY=os.environ["GEMINI_API_KEY"])
     else:
         print("Utilizando gpt4all y ejecutando la generación en local.\n"
               "Esta operación puede tomar vario minutos...")
-        gpt4all_generator = GPT4AllGenerator()
-        ia_agent = IAAgent(gpt4all_generator)
+        generator = GPT4AllGenerator()
 
+
+    ia_agent = IAAgent(generator)
     respuesta = ia_agent.generate_gdork(description=gen_dork)
     print(f"\nResultado:\n{respuesta}")
     sys.exit(0)

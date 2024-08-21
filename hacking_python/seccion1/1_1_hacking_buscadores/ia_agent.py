@@ -1,8 +1,5 @@
-import os
-
 from gpt4all import GPT4All
 from openai import OpenAI
-from dotenv import load_dotenv
 import google.generativeai as genai
 
 

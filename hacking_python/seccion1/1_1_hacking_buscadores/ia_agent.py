@@ -74,14 +74,3 @@ class IAAgent:
         
         Descripción: {description}
         """
-
-
-if __name__ == "__main__":
-    load_dotenv()
-    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-    # model = genai.GenerativeModel('gemini-1.5-flash')
-    # response = model.generate_content("Escribe un párrafo sobre la historia de la segunda guerra mundial.")
-    # print(response.text)
-
-
-

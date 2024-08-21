@@ -3,8 +3,6 @@ import os
 import argparse
 import sys
 
-import google.generativeai as genai
-
 from googleSearch import GoogleSearch
 from duckduckgoSearch import DuckSearch
 from results_parser import ResultsParser

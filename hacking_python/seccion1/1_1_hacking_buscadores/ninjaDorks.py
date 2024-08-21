@@ -35,7 +35,7 @@ def openai_config():
 
 def gemini_config():
     """
-    Cofigurar el archivo .env con los valores proporcionados para el funcionamiento de gemini
+    Configurar el archivo .env con los valores proporcionados para el funcionamiento de gemini
     Returns:
         None
     """
@@ -62,13 +62,13 @@ def generate_dork(gen_dork):
         respuesta = input("Elige el modelo de IA a utilizar: (gpt-4/gemini/local)?: ")
 
     if respuesta.lower() in ("gpt", "gpt-4"):
-        # Comprobamos si esta definida la API KEY de Opena AI en el fichero .env
-        if not "OPENAI_API_KEY" in os.environ:
+        # Comprobamos si está definida la API KEY de OpenAI en el fichero .env
+        if "OPENAI_API_KEY" not in os.environ:
             openai_config()
             load_dotenv()
         generator = OpenAIGenerator()
     elif respuesta.lower() in "gemini":
-        if not "GEMINI_API_KEY" in os.environ:
+        if "GEMINI_API_KEY" not in os.environ:
             gemini_config()
             load_dotenv()
         generator = GeminiAIGenerator(API_KEY=os.environ["GEMINI_API_KEY"])
@@ -108,15 +108,15 @@ def main_google(query, start_page, pages, lang, output_json, output_html, downlo
         sys.exit(1)
 
     # Leemos la clave API y el ID del buscador
-    API_KEY_GOOGLE = os.getenv("API_KEY_GOOGLE")
-    SEARCH_ENGINE_ID = os.getenv("SEARCH_ENGINE_ID")
+    api_key_google = os.getenv("API_KEY_GOOGLE")
+    search_engine_id = os.getenv("SEARCH_ENGINE_ID")
 
     if not query:
         print("Por favor introduzca una consulta con el comando -q."
               "Utiliza el comando -h para mostrar la ayuda.")
         sys.exit(1)
 
-    gsearch = GoogleSearch(API_KEY_GOOGLE, SEARCH_ENGINE_ID)
+    gsearch = GoogleSearch(api_key_google, search_engine_id)
     results = gsearch.search(
         query=query,
         start_page=start_page,
@@ -127,10 +127,10 @@ def main_google(query, start_page, pages, lang, output_json, output_html, downlo
     tratamiento_resultados(results, output_json, output_html)
 
     if download:
-        file_tipes = download.split(",")
+        file_types = download.split(",")
         urls = [resultado['link'] for resultado in results]
         fdowloader = FileDownloader("Descargas")
-        fdowloader.filtro_descargas(urls, file_tipes)
+        fdowloader.filtro_descargas(urls, file_types)
 
 
 def main_duck(query, output_json, output_html, download):
@@ -140,10 +140,10 @@ def main_duck(query, output_json, output_html, download):
     tratamiento_resultados(results, output_json, output_html)
 
     if download:
-        file_tipes = download.split(",")
+        file_types = download.split(",")
         urls = [resultado['link'] for resultado in results]
         fdowloader = FileDownloader("Descargas")
-        fdowloader.filtro_descargas(urls, file_tipes)
+        fdowloader.filtro_descargas(urls, file_types)
 
 
 if __name__ == '__main__':
@@ -173,7 +173,7 @@ if __name__ == '__main__':
                         help='Exporta los resultado en formato html')
     parser.add_argument('--download', type=str, default='all',
                         help="Especifica las extensiones de los archivos que quieres descargar separadas por coma."
-                             "Ej: --dowload 'pdf,doc,sql'"
+                             "Ej: --download 'pdf,doc,sql'"
                              "Default: 'None'")
     parser.add_argument("-gd", "--generate_dork", type=str,
                         help="Genera un dork a partir de una descripción por el usuario.\n"

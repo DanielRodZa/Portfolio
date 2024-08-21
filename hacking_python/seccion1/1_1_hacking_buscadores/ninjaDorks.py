@@ -7,6 +7,7 @@ from googleSearch import GoogleSearch
 from duckduckgoSearch import DuckSearch
 from results_parser import ResultsParser
 from file_downloader import FileDownloader
+from smartsearch import SmartSearch
 from ia_agent import OpenAIGenerator, GPT4AllGenerator, GeminiAIGenerator, IAAgent
 
 
@@ -53,6 +54,7 @@ def tratamiento_resultados(resultados, fichero_json=None, fichero_html=None):
     if fichero_html is not None:
         result_processor.exportar_html(fichero_html)
 
+
 def generate_dork(gen_dork):
     # Preguntar si el usuario quiere usar un modelo local u OpenAI
     respuesta = ""
@@ -65,7 +67,7 @@ def generate_dork(gen_dork):
             openai_config()
             load_dotenv()
         generator = OpenAIGenerator()
-    elif respuesta.lower() in ("gemini"):
+    elif respuesta.lower() in "gemini":
         if not "GEMINI_API_KEY" in os.environ:
             gemini_config()
             load_dotenv()
@@ -75,11 +77,28 @@ def generate_dork(gen_dork):
               "Esta operación puede tomar vario minutos...")
         generator = GPT4AllGenerator()
 
-
     ia_agent = IAAgent(generator)
     respuesta = ia_agent.generate_gdork(description=gen_dork)
     print(f"\nResultado:\n{respuesta}")
     sys.exit(0)
+
+
+def main_search(prompt, dir_path, max_tokens, model_name):
+    if dir_path is None:
+        print("Asegúrate de proporcionar una ruta de directorio para la lista de resultados.")
+        sys.exit(0)
+
+    searcher = SmartSearch(dir_path)
+    resultados = searcher.ia_search(
+        prompt=prompt,
+        max_tokens=max_tokens,
+        model_name=model_name,
+    )
+    for file, results in resultados.items():
+        print(file)
+        for r in results:
+            print(f"\t-\t{r}")
+
 
 def main_google(query, start_page, pages, lang, output_json, output_html, download):
     # Comprobar si existe el fichero .env
@@ -159,6 +178,18 @@ if __name__ == '__main__':
     parser.add_argument("-gd", "--generate_dork", type=str,
                         help="Genera un dork a partir de una descripción por el usuario.\n"
                              "Ej: --generate-dork 'Listado de usuarios y passwords en ficheros de texto'")
+    parser.add_argument("--smart_search", type=str,
+                        help="Busca con inteligencia artificial un prompt determinado en una carpeta\n"
+                             "Ej: --smart_search 'Dime los 5 puntos más importantes'")
+    parser.add_argument("--dir_path", type=str, default=None,
+                        help="La ruta al directorio en el que se encuentran los ficheros\n"
+                             "Por defecto None")
+    parser.add_argument("--model_name", type=str, default="gpt-3.5-turbo-0125",
+                        help="El nombre del modelo de OpenAi para realizar la búsqueda\n"
+                             "Por defecto 'gpt-3.5-turbo-0125'")
+    parser.add_argument("--max_tokens", type=int, default=100,
+                        help="El número máximo de tokens en la predicción\\generación.\n"
+                             "Por defecto 100 tokens")
     args = parser.parse_args()
     if args.configure:
         env_config()
@@ -184,4 +215,11 @@ if __name__ == '__main__':
             output_json=args.json,
             output_html=args.html,
             download=args.download
+        )
+    if args.smart_search:
+        main_search(
+            prompt=args.smart_search,
+            dir_path=args.dir_path,
+            max_tokens=args.max_tokens,
+            model_name=args.model_name
         )

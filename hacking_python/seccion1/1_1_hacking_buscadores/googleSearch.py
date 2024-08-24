@@ -47,6 +47,8 @@ class GoogleSearch:
     def custom_results(self, results):
         """
         Filtra los resultados de la consulta.
+        Returns:
+            custom_results (list): Lista de resultados de la busqueda.
         """
         custom_results = []
         for r in results:

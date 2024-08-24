@@ -9,6 +9,7 @@ from results_parser import ResultsParser
 from file_downloader import FileDownloader
 from smartsearch import SmartSearch
 from ia_agent import OpenAIGenerator, GPT4AllGenerator, GeminiAIGenerator, IAAgent
+from browser_autosearch import BrowserAutoSearch
 
 
 def env_config():
@@ -22,7 +23,6 @@ def env_config():
     set_key(".env", "API_KEY_GOOGLE", api_key)
     set_key(".env", "SEARCH_ENGINE_ID", engine_id)
 
-
 def openai_config():
     """
     Configurar el archivo .env con los valores proporcionados para el funcionamiento de openai
@@ -32,7 +32,6 @@ def openai_config():
     openai_api_key = input("Introduce tu API KEY de Open AI: ")
     set_key(".env", "OPENAI_API_KEY", openai_api_key)
 
-
 def gemini_config():
     """
     Configurar el archivo .env con los valores proporcionados para el funcionamiento de gemini
@@ -41,7 +40,6 @@ def gemini_config():
     """
     gemini_api_key = input("Introduce tu API KEY de Gemini: ")
     set_key(".env", "GEMINI_API_KEY", gemini_api_key)
-
 
 def tratamiento_resultados(resultados, fichero_json=None, fichero_html=None):
     # Crea y muestra los resultados por consola
@@ -53,7 +51,6 @@ def tratamiento_resultados(resultados, fichero_json=None, fichero_html=None):
         result_processor.exportar_json(fichero_json)
     if fichero_html is not None:
         result_processor.exportar_html(fichero_html)
-
 
 def generate_dork(gen_dork):
     # Preguntar si el usuario quiere usar un modelo local u OpenAI
@@ -82,7 +79,6 @@ def generate_dork(gen_dork):
     print(f"\nResultado:\n{respuesta}")
     sys.exit(0)
 
-
 def main_search(prompt, dir_path, max_tokens, model_name):
     if dir_path is None:
         print("Asegúrate de proporcionar una ruta de directorio para la lista de resultados.")
@@ -98,7 +94,6 @@ def main_search(prompt, dir_path, max_tokens, model_name):
         print(file)
         for r in results:
             print(f"\t-\t{r}")
-
 
 def main_google(query, start_page, pages, lang, output_json, output_html, download):
     # Comprobar si existe el fichero .env
@@ -132,7 +127,6 @@ def main_google(query, start_page, pages, lang, output_json, output_html, downlo
         fdowloader = FileDownloader("Descargas")
         fdowloader.filtro_descargas(urls, file_types)
 
-
 def main_duck(query, output_json, output_html, download):
     dsearch = DuckSearch()
     results = dsearch.search(query=query)
@@ -144,6 +138,16 @@ def main_duck(query, output_json, output_html, download):
         urls = [resultado['link'] for resultado in results]
         fdowloader = FileDownloader("Descargas")
         fdowloader.filtro_descargas(urls, file_types)
+
+def main_selenium(query, output_json, output_html):
+    browser_autosearch = BrowserAutoSearch()
+    browser_autosearch.search_google(query=query)
+    results = browser_autosearch.google_search_results()
+    tratamiento_resultados(
+        resultados=results,
+        fichero_json=output_json,
+        fichero_html=output_html
+    )
 
 
 if __name__ == '__main__':
@@ -190,6 +194,8 @@ if __name__ == '__main__':
     parser.add_argument("--max_tokens", type=int, default=100,
                         help="El número máximo de tokens en la predicción\\generación.\n"
                              "Por defecto 100 tokens")
+    parser.add_argument("--selenium", action='store_true', default=False,
+                        help="Utiliza selenium para realizar la búsqueda con un navegador de forma automática")
     args = parser.parse_args()
     if args.configure:
         env_config()
@@ -222,4 +228,10 @@ if __name__ == '__main__':
             dir_path=args.dir_path,
             max_tokens=args.max_tokens,
             model_name=args.model_name
+        )
+    if args.selenium:
+        main_selenium(
+            query=args.query,
+            output_json=args.json,
+            output_html=args.html
         )

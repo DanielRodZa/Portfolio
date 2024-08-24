@@ -17,12 +17,14 @@ class BrowserAutoSearch:
     def _initialize_browser(self):
         browsers = {
             "firefox": {
-                "service": FirefoxService(executable_path=GeckoDriverManager().install()),
+                "manager": GeckoDriverManager,
+                "service": FirefoxService,
                 "options": webdriver.FirefoxOptions(),
                 "driver": webdriver.Firefox
             },
             "chrome": {
-                "service": ChromeService(executable_path=ChromeDriverManager().install()),
+                "manager": ChromeDriverManager,
+                "service": ChromeService,
                 "options": webdriver.ChromeOptions(),
                 "driver": webdriver.Chrome
             }
@@ -31,7 +33,10 @@ class BrowserAutoSearch:
         # Inicalizamos los navegadores
         for browser_name, browser_info in browsers.items():
             try:
-                return browser_info["driver"](service=browser_info["service"], options=browser_info["options"])
+                return browser_info["driver"](
+                    service=browser_info["service"](browser_info["manager"]().install()),
+                    options=browser_info["options"]
+                )
             except Exception as e:
                 print(f"Error al iniciar el navegador {e}")
 

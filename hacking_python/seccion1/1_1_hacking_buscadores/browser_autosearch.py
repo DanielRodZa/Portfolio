@@ -81,7 +81,7 @@ class BrowserAutoSearch:
         Returns:
             custom_results (list): Lista de resultados de la busqueda.
         """
-        results = self.browser.find_elements(By.CSS_SELECTOR, "div.q")
+        results = self.browser.find_elements(By.CSS_SELECTOR, "div.g")
         custom_results = []
         for result in results:
             try:

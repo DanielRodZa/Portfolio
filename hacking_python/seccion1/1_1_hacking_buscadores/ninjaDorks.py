@@ -148,6 +148,7 @@ def main_selenium(query, output_json, output_html):
         fichero_json=output_json,
         fichero_html=output_html
     )
+    browser_autosearch.quit()
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ from request_gallery import solicitar_url
 
 def url_fetch(name):
     base_url = 'https://www.reddit.com'
-    endpoint = f'/user/{name}'
+    endpoint = f'{name}'
     category = ''
     url = base_url + endpoint + category + '.json'
     after_post_id = None
@@ -29,6 +29,7 @@ def url_fetch(name):
 
         json_data = response.json()
 
+        print(json_data)
         dataset.extend([rec['data'] for rec in json_data['data']['children']])
 
         after_post_id = json_data['data']['after']
@@ -46,10 +47,11 @@ def url_fetch(name):
 
 
 def create_dataframes(dataset, data, name):
+    dir_name = name.split('/')[-1]
     df = pd.DataFrame(dataset)
-    df.to_csv(f'{name}/{name}.csv', index=False)
+    df.to_csv(f'{dir_name}/{dir_name}.csv', index=False)
 
-    nombre_csv_links = f'{name}/{name}_links.csv'
+    nombre_csv_links = f'{dir_name}/{dir_name}_links.csv'
     df = pd.DataFrame(data)
     df = df.drop_duplicates(subset=['URL'])
     df.to_csv(nombre_csv_links, index=False)

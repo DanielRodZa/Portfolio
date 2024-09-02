@@ -29,7 +29,6 @@ def url_fetch(name):
 
         json_data = response.json()
 
-        print(json_data)
         dataset.extend([rec['data'] for rec in json_data['data']['children']])
 
         after_post_id = json_data['data']['after']

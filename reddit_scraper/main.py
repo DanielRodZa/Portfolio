@@ -23,8 +23,8 @@ def main(name):
     for url in tqdm(lista_urls, "Descargando archivos"):
         descargar_archivo(url=url, directorio=dir_name)
 
-    for url in tqdm(lista_galerias, 'Descargando galerías'):
-        descargar_galeria(url_principal=url, name=dir_name)
+    # for url in tqdm(lista_galerias, 'Descargando galerías'):
+    #     descargar_galeria(url_principal=url, name=dir_name)
 
 
 if __name__ == '__main__':

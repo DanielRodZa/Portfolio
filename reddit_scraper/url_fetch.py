@@ -65,9 +65,11 @@ def dividir_links(x, data):
         user = x['data']['subreddit']
         if 'is_gallery' in x['data']:
             is_gallery = True
+            gallery_data = x['data']['gallery_data']
         else:
             is_gallery = False
-        data.append({'Subreddit': user, 'Título': post_name, 'is_gallery': is_gallery, 'URL': post_url})
+            gallery_data = ''
+        data.append({'Subreddit': user, 'Título': post_name, 'is_gallery': is_gallery, 'URL': post_url, 'gallery_data': gallery_data})
     except KeyError as ke:
         print(f'El post no tiene un elemento: {ke}')
     except Exception as e:

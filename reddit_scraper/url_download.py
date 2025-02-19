@@ -1,10 +1,11 @@
 import csv
 import time
+import json
 
 import requests
 from datetime import datetime
 from bs4 import BeautifulSoup
-
+from numpy.ma.core import nomask
 
 
 def leer_urls(archivo):
@@ -15,7 +16,10 @@ def leer_urls(archivo):
 
         for fila in lector_csv:
             if fila['is_gallery'].lower() == 'true':
-                galerias.append(fila['URL'])
+                gallery_data = fila['gallery_data']
+                gallery_json = json.loads(gallery_data.replace("'", "\""))
+                for item in gallery_json['items']:
+                    urls.append(f"https://i.redd.it/{item['media_id']}.jpg")
             else:
                 urls.append(fila['URL'])
 
@@ -66,8 +70,10 @@ def descargar_galeria(url_principal, name):
     html = response.text
     soup = BeautifulSoup(html, 'html.parser')
     figure_elements = soup.find_all('figure')
+    print(figure_elements)
     for figure_element in figure_elements:
         primer_link = figure_element.find('a')['href']
+        print(primer_link)
         descargar_archivo(
             url=primer_link,
             directorio=name,

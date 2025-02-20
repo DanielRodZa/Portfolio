@@ -17,9 +17,12 @@ def leer_urls(archivo):
         for fila in lector_csv:
             if fila['is_gallery'].lower() == 'true':
                 gallery_data = fila['gallery_data']
-                gallery_json = json.loads(gallery_data.replace("'", "\""))
-                for item in gallery_json['items']:
-                    urls.append(f"https://i.redd.it/{item['media_id']}.jpg")
+                try:
+                    gallery_json = json.loads(gallery_data.replace("'", "\""))
+                    for item in gallery_json['items']:
+                        urls.append(f"https://i.redd.it/{item['media_id']}.jpg")
+                except Exception as e:
+                    print(e)
             else:
                 urls.append(fila['URL'])
 
@@ -53,7 +56,7 @@ def descargar_archivo(url, directorio='', nombre_archivo=None, gallery=False):
         if not gallery:
             extension = nombre_archivo.split('.')[-1].lower()
             if extension not in ['jpg', 'jpeg',  'png', 'webp', 'gif', 'gifv', 'mp4']:
-                raise ValueError("Formato de archivo no válido")
+                raise ValueError(f"Formato de archivo no válido\nurl: {url}")
 
         with open(nombre_archivo, 'wb') as archivo:
             archivo.write(respuesta.content)
